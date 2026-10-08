@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -8,29 +9,172 @@
 </head>
 <body>
 <div class="container">
+<header class="header">
+<div>
 <h1>Digital Twin Cloud Optimizer</h1>
-<p class="subtitle">AWS Cloud Resource Optimization</p>
-<div class="grid">
-<div class="card"><h3>CPU Utilization</h3><p id="cpu">82%</p></div>
-<div class="card"><h3>Workload</h3><p id="workload">100 req/s</p></div>
-<div class="card"><h3>Response Time</h3><p id="response">250 ms</p></div>
-<div class="card"><h3>Instances</h3><p id="instances">2</p></div>
+<p>AWS Cloud Resource Intelligence</p>
 </div>
-<div class="status">
-<h2>Digital Twin Status</h2>
-<p id="status">UNDER-PROVISIONED</p>
-<h2>Recommended Instances</h2>
-<p id="recommended">3</p>
+<div class="live-box">
+<span class="live-dot"></span>
+<span>LIVE</span>
+<div class="updated">Last updated: <span id="lastUpdated">--</span></div>
+</div>
+</header>
+
+<section class="metrics">
+<div class="metric-card">
+<div class="metric-top">
+<span>CPU Utilization</span>
+<span class="metric-icon">CPU</span>
+</div>
+<div class="metric-value" id="cpu">82%</div>
+<div class="metric-label" id="cpuLabel">High</div>
+<div class="progress"><div id="cpuBar"></div></div>
+</div>
+
+<div class="metric-card">
+<div class="metric-top">
+<span>Workload</span>
+<span class="metric-icon">REQ</span>
+</div>
+<div class="metric-value" id="workload">100 req/s</div>
+<div class="metric-label">Current traffic</div>
+</div>
+
+<div class="metric-card">
+<div class="metric-top">
+<span>Response Time</span>
+<span class="metric-icon">MS</span>
+</div>
+<div class="metric-value" id="response">250 ms</div>
+<div class="metric-label" id="responseLabel">High</div>
+</div>
+
+<div class="metric-card">
+<div class="metric-top">
+<span>Active Instances</span>
+<span class="metric-icon">EC2</span>
+</div>
+<div class="metric-value" id="instances">2</div>
+<div class="metric-label">Recommended: <span id="recommendedTop">3</span></div>
+</div>
+</section>
+
+<section class="main-grid">
+<div class="panel twin-panel">
+<div class="panel-heading">
+<div>
+<span class="eyebrow">DIGITAL TWIN STATUS</span>
+<h2 id="status">UNDER-PROVISIONED</h2>
+</div>
+<span class="status-dot" id="statusDot"></span>
+</div>
+
+<div class="decision-badge" id="decisionBadge">↑ SCALE OUT</div>
+<p class="status-description" id="statusDescription">High resource utilization or response time detected. Additional capacity is recommended.</p>
+
+<div class="capacity-row">
+<div>
+<span>Current Capacity</span>
+<strong id="currentCapacity">2</strong>
+</div>
+<div class="capacity-arrow">→</div>
+<div>
+<span>Recommended Capacity</span>
+<strong id="recommendedCapacity">3</strong>
+</div>
+</div>
+</div>
+
+<div class="panel capacity-panel">
+<div class="panel-heading">
+<div>
+<span class="eyebrow">CAPACITY</span>
+<h2>Current vs Recommended</h2>
+</div>
+</div>
+
+<div class="capacity-bars">
+<div class="bar-row">
+<div class="bar-label"><span>Current</span><strong id="capacityCurrentText">2</strong></div>
+<div class="bar-track"><div class="bar-fill current" id="currentBar"></div></div>
+</div>
+<div class="bar-row">
+<div class="bar-label"><span>Recommended</span><strong id="capacityRecommendedText">3</strong></div>
+<div class="bar-track"><div class="bar-fill recommended" id="recommendedBar"></div></div>
+</div>
+</div>
+
+<div class="capacity-message" id="capacityMessage">Additional capacity recommended</div>
+</div>
+</section>
+
+<section class="panel chart-panel">
+<div class="panel-heading">
+<div>
+<span class="eyebrow">TELEMETRY</span>
+<h2>Resource Performance</h2>
+<p>Recent Digital Twin telemetry</p>
+</div>
+</div>
+
+<div class="chart-legend">
+<span><i class="legend-cpu"></i> CPU Utilization</span>
+<span><i class="legend-response"></i> Response Time</span>
+</div>
+
+<div class="chart" id="chart">
+<div class="chart-empty" id="chartEmpty">Waiting for telemetry history...</div>
+<div class="chart-lines" id="chartLines"></div>
+</div>
+</section>
+
+<section class="panel decision-panel">
+<div class="panel-heading">
+<div>
+<span class="eyebrow">OPTIMIZATION ENGINE</span>
 <h2>Optimization Decision</h2>
-<p id="decision">SCALE_OUT</p>
 </div>
-<div class="history">
+<span class="decision-status" id="decisionStatus">SCALE OUT</span>
+</div>
+
+<div class="decision-content">
+<div class="decision-main" id="decisionMain">SCALE OUT</div>
+<div>
+<div class="decision-capacity">
+<span>Current instances</span>
+<strong id="decisionCurrent">2</strong>
+</div>
+<div class="decision-capacity">
+<span>Recommended instances</span>
+<strong id="decisionRecommended">3</strong>
+</div>
+</div>
+</div>
+
+<div class="why-box">
+<strong>Why?</strong>
+<span id="decisionExplanation">High CPU utilization or response time indicates that additional capacity is required.</span>
+</div>
+</section>
+
+<section class="panel history-panel">
+<div class="panel-heading">
+<div>
+<span class="eyebrow">RECENT ACTIVITY</span>
 <h2>Optimization History</h2>
+</div>
+</div>
+
+<div class="history-summary" id="historySummary"></div>
+
+<div class="table-wrapper">
 <table>
 <thead>
 <tr>
 <th>CPU</th>
 <th>Workload</th>
+<th>Response</th>
 <th>Instances</th>
 <th>Status</th>
 <th>Decision</th>
@@ -39,6 +183,8 @@
 <tbody id="history"></tbody>
 </table>
 </div>
+</section>
+
 </div>
 <script src="script.js"></script>
 </body>
