@@ -1,7 +1,7 @@
 import boto3
 import json
 from decimal import Decimal
-from ishaan.digital_twin.optimizer import OptimizationEngine
+from digital_twin.optimizer import OptimizationEngine
 
 engine=OptimizationEngine()
 table=boto3.resource("dynamodb",region_name="ap-south-1").Table("DigitalTwinState")
@@ -20,9 +20,9 @@ def response(status_code,body):
         "statusCode":status_code,
         "headers":{
             "Content-Type":"application/json",
-            "Access-Control-Allow-Origin":"*",
+            "Access-Control-Allow-Origin":"http://localhost:8000",
             "Access-Control-Allow-Headers":"Content-Type",
-            "Access-Control-Allow-Methods":"GET,OPTIONS"
+            "Access-Control-Allow-Methods":"GET,POST,OPTIONS"
         },
         "body":json.dumps(body)
     }
@@ -44,26 +44,34 @@ def lambda_handler(event,context):
 
         return response(200,clean_item(item))
 
-    twin=engine.optimize(
-        event.get("application","CloudOptimizationDemo"),
-        float(event["cpu_utilization"]),
-        float(event["workload"]),
-        float(event["response_time_ms"]),
-        int(event["instance_count"])
-    )
+    if method=="POST":
+        body=event.get("body",event)
 
-    item=twin.to_dict()
+        if isinstance(body,str):
+            body=json.loads(body)
 
-    table.put_item(Item={
-        "application":item["application"],
-        "instances":item["instances"],
-        "cpu_utilization":Decimal(str(item["cpu_utilization"])),
-        "workload":Decimal(str(item["workload"])),
-        "response_time_ms":Decimal(str(item["response_time_ms"])),
-        "status":item["status"],
-        "recommended_instances":item["recommended_instances"],
-        "decision":item["decision"],
-        "timestamp":item["timestamp"]
-    })
+        twin=engine.optimize(
+            body.get("application","CloudOptimizationDemo"),
+            float(body["cpu_utilization"]),
+            float(body["workload"]),
+            float(body["response_time_ms"]),
+            int(body["instance_count"])
+        )
 
-    return response(200,item)
+        item=twin.to_dict()
+
+        table.put_item(Item={
+            "application":item["application"],
+            "instances":item["instances"],
+            "cpu_utilization":Decimal(str(item["cpu_utilization"])),
+            "workload":Decimal(str(item["workload"])),
+            "response_time_ms":Decimal(str(item["response_time_ms"])),
+            "status":item["status"],
+            "recommended_instances":item["recommended_instances"],
+            "decision":item["decision"],
+            "timestamp":item["timestamp"]
+        })
+
+        return response(200,item)
+
+    return response(405,{"message":"Method not allowed"})

@@ -1,5 +1,4 @@
-from ishaan.digital_twin.model import DigitalTwin
-
+from digital_twin.model import DigitalTwin
 class OptimizationEngine:
     def __init__(self,min_instances=1,max_instances=10):
         self.min_instances=min_instances
