@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+*.zip
+build/
+payload.json
+response.json
+cors-config.json
+event.json
+get-event.json
+get-response.json
+lambda-response.json
+dynamodb-policy.json
+trust-policy.json

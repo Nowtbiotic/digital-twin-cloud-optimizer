@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Digital Twin Cloud Optimizer</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+<h1>Digital Twin Cloud Optimizer</h1>
+<p class="subtitle">AWS Cloud Resource Optimization</p>
+<div class="grid">
+<div class="card"><h3>CPU Utilization</h3><p id="cpu">82%</p></div>
+<div class="card"><h3>Workload</h3><p id="workload">100 req/s</p></div>
+<div class="card"><h3>Response Time</h3><p id="response">250 ms</p></div>
+<div class="card"><h3>Instances</h3><p id="instances">2</p></div>
+</div>
+<div class="status">
+<h2>Digital Twin Status</h2>
+<p id="status">UNDER-PROVISIONED</p>
+<h2>Recommended Instances</h2>
+<p id="recommended">3</p>
+<h2>Optimization Decision</h2>
+<p id="decision">SCALE_OUT</p>
+</div>
+<div class="history">
+<h2>Optimization History</h2>
+<table>
+<thead>
+<tr>
+<th>CPU</th>
+<th>Workload</th>
+<th>Instances</th>
+<th>Status</th>
+<th>Decision</th>
+</tr>
+</thead>
+<tbody id="history"></tbody>
+</table>
+</div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
