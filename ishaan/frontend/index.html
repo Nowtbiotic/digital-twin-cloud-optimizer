@@ -9,12 +9,30 @@
 </head>
 <body>
 <div class="container">
+
 <header class="header">
 <div>
 <h1>Digital Twin Cloud Optimizer</h1>
 <p>AWS Cloud Resource Intelligence</p>
 </div>
+<div class="header-controls">
+<div class="mode-selector">
+<label for="demoMode">Data Source</label>
+<select id="demoMode">
+<option value="live">Live AWS</option>
+<option value="high">High Load Demo</option>
+<option value="normal">Normal Load Demo</option>
+<option value="low">Low Load Demo</option>
+</select>
+</div>
 <div class="live-box">
+<span class="live-dot" id="liveDot"></span>
+<span id="sourceLabel">LIVE AWS TELEMETRY</span>
+<div class="updated">Last updated: <span id="lastUpdated">--</span></div>
+</div>
+</div>
+</header>
+<div id="demoBanner" class="demo-banner" hidden>DEMONSTRATION MODE — CONTROLLED TEST INPUTS</div>
 <span class="live-dot"></span>
 <span>LIVE</span>
 <div class="updated">Last updated: <span id="lastUpdated">--</span></div>
